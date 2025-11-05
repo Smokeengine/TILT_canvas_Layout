@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TILT Accessibility Resource Library</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1B5E20;
+            --primary-light: #2E7D32;
+            --secondary: #0277BD;
+            
+            --learning: #1565C0;
+            --learning-bg: #E3F2FD;
+            
+            --gray-50: #FAFAFA;
+            --gray-100: #F5F5F5;
+            --gray-200: #EEEEEE;
+            --gray-300: #E0E0E0;
+            --gray-600: #757575;
+            --gray-700: #616161;
+            --gray-900: #212121;
+            
+            --green-bg: #E8F5E9;
+            --green-border: #4CAF50;
+            --green-text: #2E7D32;
+            --red-bg: #FFEBEE;
+            --red-border: #F44336;
+            --red-text: #C62828;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--gray-900);
+            background-color: var(--gray-50);
+        }
+
+        /* Header */
+        .site-header {
+            background: white;
+            border-bottom: 1px solid var(--gray-200);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: var(--gray-600);
+        }
+
+        .breadcrumb a {
+            color: var(--secondary);
+            text-decoration: none;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 48px 24px;
+        }
+
+        .container-narrow {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 32px 24px;
+        }
+
+        /* Page Header */
+        .page-header {
+            margin-bottom: 48px;
+        }
+
+        .page-title {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 8px;
+        }
+
+        .page-subtitle {
+            font-size: 18px;
+            color: var(--gray-600);
+            max-width: 700px;
+        }
+
+        /* Module Info */
+        .module-info {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 32px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-left: 4px solid var(--primary);
+        }
+
+        .module-info h2 {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .module-info p {
+            color: var(--gray-700);
+            line-height: 1.6;
+        }
+
+        /* Results Header */
+        .results-header {
+            margin-bottom: 24px;
+        }
+
+        .results-count {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--gray-700);
+        }
+
+        /* Resource Grid */
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 24px;
+        }
+
+        /* Resource Card */
+        .resource-card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 1px solid var(--gray-200);
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+        }
+
+        .section-number {
+            display: inline-block;
+            padding: 6px 12px;
+            background: var(--learning-bg);
+            color: var(--learning);
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .card-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+
+        .card-summary {
+            font-size: 15px;
+            color: var(--gray-600);
+            margin-bottom: 16px;
+            line-height: 1.6;
+            flex-grow: 1;
+        }
+
+        .card-video-count {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: var(--gray-600);
+            margin-bottom: 16px;
+            padding: 8px 12px;
+            background: var(--gray-50);
+            border-radius: 6px;
+            width: fit-content;
+        }
+
+        .card-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 16px;
+            border-top: 1px solid var(--gray-200);
+        }
+
+        .meta-info {
+            font-size: 14px;
+            color: var(--gray-600);
+        }
+
+        .card-action {
+            padding: 10px 20px;
+            background: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .card-action:hover {
+            background: #01579B;
+        }
+
+        /* Detail View */
+        .library-view.hidden { display: none; }
+        .detail-view { display: none; }
+        .detail-view.active { display: block; }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: white;
+            color: var(--secondary);
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            margin-bottom: 24px;
+        }
+
+        .back-link:hover {
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transform: translateX(-4px);
+        }
+
+        /* Page Banner */
+        .page-banner {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            padding: 32px;
+            border-radius: 12px;
+            margin-bottom: 32px;
+        }
+
+        .banner-label {
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.9;
+            margin-bottom: 8px;
+        }
+
+        .detail-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .page-intro {
+            font-size: 16px;
+            opacity: 0.95;
+            line-height: 1.6;
+        }
+
+        /* Content Section */
+        .content-section {
+            background: white;
+            padding: 32px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .content-section h2 {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--gray-200);
+        }
+
+        .content-section h3 {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--gray-900);
+            margin: 24px 0 12px 0;
+        }
+
+        .content-section p {
+            margin-bottom: 16px;
+            color: var(--gray-700);
+            line-height: 1.7;
+        }
+
+        .content-section ul,
+        .content-section ol {
+            margin-bottom: 16px;
+            padding-left: 24px;
+        }
+
+        .content-section li {
+            margin-bottom: 8px;
+            color: var(--gray-700);
+            line-height: 1.6;
+        }
+
+        /* Video Container */
+        .video-container {
+            position: relative;
+            background: #000;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 24px 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .video-placeholder {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%;
+            background: linear-gradient(135deg, #1B5E20 0%, #2E7D32 100%);
+        }
+
+        .video-placeholder-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: white;
+        }
+
+        .play-button {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .play-button:hover {
+            background: rgba(255, 255, 255, 0.4);
+            transform: scale(1.1);
+        }
+
+        .play-button::after {
+            content: "▶";
+            font-size: 32px;
+            color: white;
+            margin-left: 4px;
+        }
+
+        .video-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .video-duration {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        /* Transcript */
+        .transcript-container {
+            margin-top: 16px;
+            border: 1px solid var(--gray-300);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .transcript-toggle {
+            width: 100%;
+            padding: 12px 16px;
+            background: var(--gray-100);
+            border: none;
+            text-align: left;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: background 0.2s;
+        }
+
+        .transcript-toggle:hover {
+            background: var(--gray-200);
+        }
+
+        .transcript-icon {
+            font-size: 12px;
+            transition: transform 0.3s;
+        }
+
+        .transcript-toggle.active .transcript-icon {
+            transform: rotate(180deg);
+        }
+
+        .transcript-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .transcript-content.expanded {
+            max-height: 2000px;
+        }
+
+        .transcript-text {
+            padding: 16px;
+            font-size: 14px;
+            line-height: 1.8;
+            color: var(--gray-700);
+        }
+
+        /* Do/Don't Grid */
+        .do-dont-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin: 24px 0;
+        }
+
+        .do-dont-box {
+            padding: 24px;
+            border-radius: 8px;
+            border: 2px solid;
+        }
+
+        .do-box {
+            background: var(--green-bg);
+            border-color: var(--green-border);
+        }
+
+        .dont-box {
+            background: var(--red-bg);
+            border-color: var(--red-border);
+        }
+
+        .do-dont-box h4 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .do-box h4 { color: var(--green-text); }
+        .dont-box h4 { color: var(--red-text); }
+
+        .do-dont-box p {
+            color: var(--gray-900);
+            margin-bottom: 12px;
+            font-size: 15px;
+        }
+
+        .contrast-example {
+            padding: 16px;
+            border-radius: 4px;
+            font-weight: 600;
+            text-align: center;
+            margin-top: 8px;
+            font-size: 20px;
+        }
+
+        /* Image Container */
+        .image-container {
+            margin: 24px 0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .image-placeholder {
+            background: var(--gray-200);
+            padding: 60px;
+            text-align: center;
+            color: var(--gray-600);
+        }
+
+        .image-caption {
+            padding: 12px 16px;
+            background: var(--gray-100);
+            font-size: 14px;
+            color: var(--gray-700);
+            font-style: italic;
+        }
+
+        /* Info Box */
+        .info-box {
+            padding: 24px;
+            background: var(--gray-100);
+            border-left: 4px solid var(--primary);
+            border-radius: 4px;
+            margin: 24px 0;
+        }
+
+        .info-box h3 {
+            margin-top: 0;
+            color: var(--primary);
+        }
+
+        .info-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Tools Grid */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 16px;
+            margin: 24px 0;
+        }
+
+        .tool-card {
+            padding: 20px;
+            background: var(--gray-50);
+            border: 1px solid var(--gray-300);
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+
+        .tool-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+
+        .tool-card h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--primary);
+        }
+
+        .tool-card p {
+            font-size: 14px;
+            color: var(--gray-700);
+            margin-bottom: 12px;
+        }
+
+        .tool-card a {
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .resource-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .do-dont-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .detail-title {
+                font-size: 24px;
+            }
+
+            .content-section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="site-header">
+        <div class="header-content">
+            <a href="#" class="logo" onclick="showLibrary(); return false;">TILT Resources</a>
+            <nav class="breadcrumb">
+                <a href="#">Home</a>
+                <span>/</span>
+                <a href="#">Resources</a>
+                <span>/</span>
+                <span id="breadcrumbText">Module 2: Accessibility</span>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main id="mainContent">
+        <!-- Library View -->
+        <div id="libraryView" class="library-view">
+            <div class="container">
+                <!-- Page Header -->
+                <div class="page-header">
+                    <h1 class="page-title">Module 2: Developing Accessibility</h1>
+                    <p class="page-subtitle">
+                        Learn best practices for creating accessible course materials including documents, visual design, multimedia, and proper content structure.
+                    </p>
+                </div>
+
+                <!-- Module Info -->
+                <div class="module-info">
+                    <h2>📚 About This Module</h2>
+                    <p>
+                        This module covers essential principles of web accessibility, including color contrast, document structure, 
+                        captions and transcripts, and reading order. You'll learn how to ensure your course materials are accessible 
+                        to all students, including those using screen readers and other assistive technologies.
+                    </p>
+                </div>
+
+                <!-- Results Header -->
+                <div class="results-header">
+                    <div class="results-count">4 Sections in This Module</div>
+                </div>
+
+                <!-- Resource Grid -->
+                <div class="resource-grid" id="resourceGrid"></div>
+            </div>
+        </div>
+
+        <!-- Detail View -->
+        <div id="detailView" class="detail-view">
+            <div class="container-narrow">
+                <a href="#" class="back-link" onclick="showLibrary(); return false;">
+                    ← Back to Module Overview
+                </a>
+
+                <div id="detailContent"></div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // ONLY THE 4 ACTUAL SECTIONS FROM YOUR CANVAS MODULE
+        const resources = [
+            {
+                id: 1,
+                sectionNumber: "Section 1.1",
+                title: "Text Recognition",
+                summary: "Learn how to make PDFs accessible by adding text recognition, proper tagging, and structure so screen readers can navigate documents correctly.",
+                estimatedTime: "12 min",
+                videos: [
+                    { title: "PDF: Is it just an Image?", duration: "2:34" },
+                    { title: "Text Recognition Process", duration: "5:12" },
+                    { title: "Testing PDF Accessibility", duration: "4:18" }
+                ]
+            },
+            {
+                id: 2,
+                sectionNumber: "Section 1.2",
+                title: "Color Contrast",
+                summary: "Understand WCAG color contrast requirements and learn how to test and fix contrast issues to ensure readability for students with low vision and color blindness.",
+                estimatedTime: "15 min",
+                videos: [
+                    { title: "Choice of Color & Contrast", duration: "3:22" },
+                    { title: "Poor Contrast Can Fail", duration: "5:14" },
+                    { title: "Considering CSU's Colors", duration: "2:50" },
+                    { title: "Why Content Is Important", duration: "4:38" }
+                ]
+            },
+            {
+                id: 3,
+                sectionNumber: "Section 1.3",
+                title: "Captions and Transcripts",
+                summary: "Add captions to videos and create transcripts for audio content to make multimedia accessible to deaf and hard-of-hearing students.",
+                estimatedTime: "10 min",
+                videos: [
+                    { title: "Closed Captions vs Transcripts", duration: "2:47" },
+                    { title: "Adding Captions in Kaltura", duration: "6:35" }
+                ]
+            },
+            {
+                id: 4,
+                sectionNumber: "Section 1.4",
+                title: "Reading Order",
+                summary: "Structure your documents and web pages so that screen readers navigate content in a logical sequence that makes sense to users.",
+                estimatedTime: "8 min",
+                videos: [
+                    { title: "What Is Reading Order?", duration: "3:37" },
+                    { title: "Testing with Screen Readers", duration: "4:25" }
+                ]
+            }
+        ];
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            renderResources();
+        });
+
+        // Render resource cards
+        function renderResources() {
+            const grid = document.getElementById('resourceGrid');
+
+            grid.innerHTML = resources.map(resource => {
+                const videoCountText = resource.videos.length === 1 
+                    ? '1 video' 
+                    : `${resource.videos.length} videos`;
+                
+                return `
+                    <article class="resource-card" onclick="showDetail(${resource.id})">
+                        <div class="section-number">${resource.sectionNumber}</div>
+                        
+                        <h3 class="card-title">${resource.title}</h3>
+                        
+                        <p class="card-summary">${resource.summary}</p>
+
+                        <div class="card-video-count">
+                            <span>🎬</span>
+                            <span>${videoCountText} • ${resource.estimatedTime}</span>
+                        </div>
+                        
+                        <div class="card-meta">
+                            <div class="meta-info">
+                                Module 2 • Accessibility
+                            </div>
+                            <span class="card-action">
+                                View Section →
+                            </span>
+                        </div>
+                    </article>
+                `;
+            }).join('');
+        }
+
+        // Show detail view with full content
+        function showDetail(resourceId) {
+            const resource = resources.find(r => r.id === resourceId);
+            if (!resource) return;
+
+            // Generate video sections
+            const videosHtml = resource.videos.map((video, index) => `
+                <div class="content-section">
+                    ${index === 0 ? `<h2>${video.title}</h2>` : `<h2>Video ${index + 1}: ${video.title}</h2>`}
+                    
+                    <div class="video-container">
+                        <div class="video-placeholder">
+                            <div class="video-placeholder-content">
+                                <div class="play-button"></div>
+                                <div class="video-title">${video.title}</div>
+                                <div class="video-duration">${video.duration}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="transcript-container">
+                        <button class="transcript-toggle" onclick="toggleTranscript(this)">
+                            <span>📄 Transcript</span>
+                            <span class="transcript-icon">▼</span>
+                        </button>
+                        <div class="transcript-content">
+                            <div class="transcript-text">
+                                <p><strong>Video Transcript:</strong></p>
+                                <p>This is where the full transcript for "${video.title}" would appear. In your production system, you would copy the actual transcript text from your Canvas module for this video.</p>
+                                <p>Transcripts should include all spoken content, speaker identification if multiple people speak, and descriptions of important visual information that isn't conveyed through audio.</p>
+                                <p>You can expand the transcripts in your Canvas module and copy/paste the text directly into your resource pages.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            // Special content based on section
+            let specialContent = '';
+            
+            if (resourceId === 2) {
+                // Color Contrast gets the full treatment
+                specialContent = `
+                    <div class="content-section">
+                        <h2>What Is Color Contrast?</h2>
+                        
+                        <p>
+                            Color contrast measures the difference between text and background colors. Good contrast ensures students 
+                            with low vision or color blindness can read your content comfortably. Poor contrast makes text difficult 
+                            or impossible to read, creating barriers for many learners.
+                        </p>
+
+                        <div class="do-dont-grid">
+                            <div class="do-dont-box do-box">
+                                <h4>
+                                    <span>✓</span>
+                                    <span>Do This</span>
+                                </h4>
+                                <p>Use good color contrast between text and background</p>
+                                <div class="contrast-example" style="background: #000; color: #fff;">
+                                    Aa
+                                </div>
+                                <p style="margin-top: 12px; font-size: 13px; text-align: center;">
+                                    <strong>High Contrast</strong><br>
+                                    Black on White: 21:1 ratio
+                                </p>
+                            </div>
+
+                            <div class="do-dont-box dont-box">
+                                <h4>
+                                    <span>✗</span>
+                                    <span>Don't Do This</span>
+                                </h4>
+                                <p>Use low contrast that makes text hard to read</p>
+                                <div class="contrast-example" style="background: #fff; color: #ccc; border: 1px solid #ddd;">
+                                    Aa
+                                </div>
+                                <p style="margin-top: 12px; font-size: 13px; text-align: center;">
+                                    <strong>Low Contrast</strong><br>
+                                    Light Gray on White: 1.6:1 ratio
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="content-section">
+                        <h2>WCAG Contrast Requirements</h2>
+                        
+                        <p><strong>Standard text (under 18pt or 14pt bold):</strong></p>
+                        <ul>
+                            <li><strong>Minimum (Level AA):</strong> 4.5:1 contrast ratio - Required by CSU</li>
+                            <li><strong>Enhanced (Level AAA):</strong> 7:1 contrast ratio - Recommended for maximum accessibility</li>
+                        </ul>
+
+                        <p><strong>Large text (18pt+ regular or 14pt+ bold):</strong></p>
+                        <ul>
+                            <li><strong>Minimum (Level AA):</strong> 3:1 contrast ratio</li>
+                            <li><strong>Enhanced (Level AAA):</strong> 4.5:1 contrast ratio</li>
+                        </ul>
+
+                        <div class="info-box">
+                            <h3>CSU Policy</h3>
+                            <p>Colorado State University requires <strong>WCAG Level AA compliance</strong> for all instructional materials. This means a minimum 4.5:1 contrast ratio for standard text and 3:1 for large text.</p>
+                        </div>
+                    </div>
+
+                    <div class="content-section">
+                        <h2>How to Check Your Content</h2>
+                        
+                        <h3>Option 1: WebAIM Contrast Checker (Recommended)</h3>
+                        <ol>
+                            <li>Go to webaim.org/resources/contrastchecker/</li>
+                            <li>Enter your foreground (text) color hex code</li>
+                            <li>Enter your background color hex code</li>
+                            <li>Check if it passes WCAG AA requirements</li>
+                            <li>Adjust colors until you achieve 4.5:1 minimum</li>
+                        </ol>
+
+                        <h3>Option 2: Canvas Accessibility Checker</h3>
+                        <ol>
+                            <li>Open your Canvas course page in edit mode</li>
+                            <li>Click the accessibility checker icon (person icon in toolbar)</li>
+                            <li>Review any contrast issues flagged</li>
+                            <li>Fix issues using the inline suggestions</li>
+                        </ol>
+
+                        <h3>Option 3: Color Contrast Analyzer App</h3>
+                        <ol>
+                            <li>Download the free Color Contrast Analyzer from TPGi</li>
+                            <li>Use the eyedropper tool to sample colors on your screen</li>
+                            <li>Get instant WCAG compliance feedback</li>
+                            <li>Test entire documents or web pages</li>
+                        </ol>
+                    </div>
+
+                    <div class="content-section">
+                        <h2>Common Mistakes to Avoid</h2>
+                        <ul>
+                            <li><strong>Using color alone to convey meaning</strong> - Always pair color with text, icons, or patterns</li>
+                            <li><strong>Light gray text on white backgrounds</strong> - Common in placeholders and secondary text</li>
+                            <li><strong>Colored text over patterned backgrounds</strong> - Patterns reduce effective contrast</li>
+                            <li><strong>Yellow or light green text on white</strong> - These combinations never meet WCAG requirements</li>
+                            <li><strong>Low contrast in images of text</strong> - Apply same standards to infographics and screenshots</li>
+                        </ul>
+                    </div>
+
+                    <div class="content-section">
+                        <h2>Tools & Resources</h2>
+                        
+                        <div class="tools-grid">
+                            <div class="tool-card">
+                                <h4>🔧 WebAIM Contrast Checker</h4>
+                                <p>Free online tool to test color combinations instantly</p>
+                                <a href="https://webaim.org/resources/contrastchecker/" target="_blank">Launch Tool →</a>
+                            </div>
+
+                            <div class="tool-card">
+                                <h4>🔧 Color Contrast Analyzer</h4>
+                                <p>Desktop app with eyedropper for sampling screen colors</p>
+                                <a href="https://www.tpgi.com/color-contrast-checker/" target="_blank">Download →</a>
+                            </div>
+
+                            <div class="tool-card">
+                                <h4>📋 CSU Color Palette</h4>
+                                <p>Pre-approved accessible color combinations for CSU branding</p>
+                                <a href="#">Download Template →</a>
+                            </div>
+
+                            <div class="tool-card">
+                                <h4>📚 Canvas Checker Guide</h4>
+                                <p>Step-by-step guide to using Canvas accessibility tools</p>
+                                <a href="#">View Guide →</a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else {
+                // Other sections get overview content
+                specialContent = `
+                    <div class="content-section">
+                        <h2>Overview</h2>
+                        <p>
+                            ${resource.summary}
+                        </p>
+
+                        <h2>Key Concepts</h2>
+                        <ul>
+                            <li>Understanding why ${resource.title.toLowerCase()} matters for accessibility</li>
+                            <li>Best practices and techniques for implementation</li>
+                            <li>Common mistakes to avoid</li>
+                            <li>Tools and resources to help you succeed</li>
+                            <li>How to test and verify your work</li>
+                        </ul>
+
+                        <h2>Learning Objectives</h2>
+                        <p>By the end of this section, you will be able to:</p>
+                        <ol>
+                            <li>Explain the importance of ${resource.title.toLowerCase()} for accessibility</li>
+                            <li>Apply best practices when creating course materials</li>
+                            <li>Use appropriate tools to test and verify accessibility</li>
+                            <li>Identify and fix common ${resource.title.toLowerCase()} issues</li>
+                        </ol>
+                    </div>
+
+                    <div class="content-section">
+                        <h2>Best Practices</h2>
+                        
+                        <div class="do-dont-grid">
+                            <div class="do-dont-box do-box">
+                                <h4>
+                                    <span>✓</span>
+                                    <span>Do This</span>
+                                </h4>
+                                <ul style="margin: 0; padding-left: 20px;">
+                                    <li>Follow WCAG guidelines</li>
+                                    <li>Test with assistive technology</li>
+                                    <li>Document your process</li>
+                                    <li>Ask for help when needed</li>
+                                </ul>
+                            </div>
+
+                            <div class="do-dont-box dont-box">
+                                <h4>
+                                    <span>✗</span>
+                                    <span>Avoid This</span>
+                                </h4>
+                                <ul style="margin: 0; padding-left: 20px;">
+                                    <li>Skipping accessibility checks</li>
+                                    <li>Assuming all users access content the same way</li>
+                                    <li>Waiting until the end to think about accessibility</li>
+                                    <li>Ignoring automated checker warnings</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="content-section">
+                        <h2>Additional Resources</h2>
+                        <ul>
+                            <li><a href="#">WCAG Guidelines for ${resource.title}</a></li>
+                            <li><a href="#">CSU Accessibility Policy</a></li>
+                            <li><a href="#">Step-by-Step Tutorial</a></li>
+                            <li><a href="#">Common Issues and Fixes</a></li>
+                        </ul>
+                    </div>
+                `;
+            }
+
+            // Build complete detail page
+            document.getElementById('detailContent').innerHTML = `
+                <div class="page-banner">
+                    <div class="banner-label">Module 2 • ${resource.sectionNumber}: ${resource.title}</div>
+                    <h1 class="detail-title">Developing Accessibility</h1>
+                    <p class="page-intro">
+                        This section covers best principles of web accessibility related to ${resource.title.toLowerCase()}. 
+                        ${resource.summary}
+                    </p>
+                </div>
+
+                ${videosHtml}
+
+                ${specialContent}
+
+                <div class="info-box">
+                    <h3>Need Help?</h3>
+                    <p>
+                        Contact the Instructional Design Team at <a href="mailto:accessibility@csu.edu">accessibility@csu.edu</a> for 
+                        personalized assistance with ${resource.title.toLowerCase()} or other accessibility questions.
+                    </p>
+                    <p style="margin-top: 12px;">
+                        <strong>Office Hours:</strong> Monday-Friday, 9:00 AM - 5:00 PM<br>
+                        <strong>Phone:</strong> (555) 123-4567<br>
+                        <strong>Location:</strong> TILT, The Institue for Learning ang Teaching
+                    </p>
+                </div>
+            `;
+
+            // Update breadcrumb
+            document.getElementById('breadcrumbText').textContent = resource.sectionNumber + ': ' + resource.title;
+
+            // Toggle views
+            document.getElementById('libraryView').classList.add('hidden');
+            document.getElementById('detailView').classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        // Show library view
+        function showLibrary() {
+            document.getElementById('libraryView').classList.remove('hidden');
+            document.getElementById('detailView').classList.remove('active');
+            document.getElementById('breadcrumbText').textContent = 'Module 2: Accessibility';
+            window.scrollTo(0, 0);
+        }
+
+        // Toggle transcript
+        function toggleTranscript(button) {
+            const content = button.nextElementSibling;
+            button.classList.toggle('active');
+            content.classList.toggle('expanded');
+        }
+
+        // Simulate video play
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('play-button') || e.target.closest('.play-button')) {
+                alert('In production, this would play the video using Kaltura, YouTube, or your video platform.');
+            }
+        });
+    </script>
+</body>
+</html>
